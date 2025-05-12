@@ -1,0 +1,217 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.create-project-container {
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #0e0625;
+  color: #ffffff;
+  display: flex;
+  justify-content: center; /* Horizontally center */
+  align-items: flex-start;  /* Align content to top, change to center for full centering */
+  padding-top: 2rem;
+}
+
+.content-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 5%;
+}
+
+
+/* Greeting section styles */
+.greeting-section {
+  margin-bottom: 3rem;
+}
+
+.greeting-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.greeting-subtitle {
+  font-size: 1.1rem;
+  color: #a9a9b8;
+}
+
+/* Section title styling */
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+/* AI prototype section styles */
+.ai-prototype-section {
+  margin-bottom: 3rem;
+}
+
+.ai-input-area {
+  display: flex;
+  align-items: center;
+  background-color: #1a1832;
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.ai-input {
+  flex: 1;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 1rem;
+  outline: none;
+}
+
+.ai-input::placeholder {
+  color: #a9a9b8;
+}
+
+.ai-input-tab {
+  background-color: #272541;
+  color: #a9a9b8;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  margin-right: 1rem;
+}
+
+.ai-microphone-icon {
+  color: #9b87f5;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.more-prompts {
+  display: flex;
+  align-items: center;
+  color: #9b87f5;
+  font-size: 0.9rem;
+  cursor: pointer;
+  gap: 0.5rem;
+}
+
+/* Start coding section styles */
+.start-coding-section {
+  margin-bottom: 3rem;
+}
+
+.coding-options {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.new-workspace-button, .import-repo-button {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.new-workspace-button {
+  background-color: #9b87f5;
+  color: #ffffff;
+}
+
+.new-workspace-button:hover {
+  background-color: #8a76e5;
+  transform: translateY(-2px);
+}
+
+.new-workspace-button:disabled {
+  background-color: #5d5678;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.import-repo-button {
+  background-color: transparent;
+  color: #ffffff;
+  border: 1px solid #4d4d69;
+}
+
+.import-repo-button:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+}
+
+.button-icon {
+  font-size: 0.9rem;
+}
+
+/* Workspaces section styles */
+.workspaces-section {
+  margin-bottom: 2rem;
+}
+
+.workspaces-tabs {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #4d4d69;
+}
+
+.workspace-tab {
+  background: none;
+  border: none;
+  color: #a9a9b8;
+  font-size: 1rem;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.workspace-tab.active {
+  color: #ffffff;
+}
+
+.workspace-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #9b87f5;
+}
+
+.project-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .create-project-container {
+    padding: 2rem 1rem;
+  }
+  
+  .greeting-title {
+    font-size: 2rem;
+  }
+  
+  .coding-options {
+    flex-direction: column;
+  }
+  
+  .workspaces-tabs {
+    gap: 1rem;
+  }
+}

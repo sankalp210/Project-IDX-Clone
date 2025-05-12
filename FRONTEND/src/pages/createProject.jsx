@@ -1,45 +1,16 @@
-import { Button, Layout } from "antd";
+import React, { useState } from 'react';
 import { useCreateProject } from "../hooks/apis/mutations/useCreateProject"
 import { useNavigate } from "react-router-dom";
+import './createProject.css'; // Assuming you'll create a CreateProject.css file for styling
+import { FaMicrophone, FaChevronDown, FaPlus, FaGitAlt } from 'react-icons/fa';
+// import { SiJavascript, SiTypescript, SiPython, SiJava, SiPhp, SiRuby, SiOauth2 } from 'react-icons/si'; // Placeholder icons
 
-const layoutStyle = {
-    borderRadius: 8,
-    overflow: 'hidden',
-    width: 'calc(50% - 8px)',
-    maxWidth: 'calc(50% - 8px)',
-    border: '2px solid black',
-  };
-
-const headerStyle = {
-    textAlign: 'center',
-    color: '#fff',
-    height: 120,
-    paddingInline: 48,
-    lineHeight: '64px',
-    backgroundColor: 'orange',
-  };
-  
-const contentStyle = {
-    textAlign: 'center',
-    minHeight: 120,
-    lineHeight: '120px',
-    color: '#fff',
-    backgroundColor: 'white',
-  };
-
-  const footerStyle = {
-    height: 120,
-    textAlign: 'center',
-    color: '#fff',
-    backgroundColor: 'green',
-  };  
 export const CreateProject = () => {
 
     const navigate = useNavigate();
 
-    const { Header, Footer, Content } = Layout;
-
     const {createProject,isPending} = useCreateProject();
+    const [activeTab, setActiveTab] = useState('myWorkspaces');
 
     async function handleCreateProject(){
         console.log('Creating project...')
@@ -54,18 +25,61 @@ export const CreateProject = () => {
     }
 
     return (
-        <Layout style={layoutStyle}>
-            <Header style={headerStyle}>
-                <h1>Create Project</h1>
-            </Header>
-            <Content style={contentStyle}>
-                <Button type="primary" onClick={handleCreateProject} disabled={isPending}>
-                    {isPending? 'Creating...' : 'Create Project'}
-                </Button>
-            </Content>
-            <Footer style={footerStyle}>
-                <p>Created by Sankalp</p>
-            </Footer>
-        </Layout>
+        <div className="create-project-container">
+            <div class="content-wrapper">
+            <div className="greeting-section">
+                <h1 className="greeting-title">Hello, Sankalp Meshram</h1>
+                <p className="greeting-subtitle">Welcome back</p>
+            </div>
+
+            <div className="ai-prototype-section">
+                <h2 className="section-title">Prototype an app with AI</h2>
+                <div className="ai-input-area">
+                    <input
+                        type="text"
+                        placeholder="An app that generates poems from photos"
+                        className="ai-input"
+                    />
+                    <span className="ai-input-tab">Tab</span>
+                    <FaMicrophone className="ai-microphone-icon" />
+                </div>
+                <div className="more-prompts">
+                    More sample prompts <FaChevronDown />
+                </div>
+            </div>
+
+            <div className="start-coding-section">
+                <h2 className="section-title">Start coding an app</h2>
+                <div className="coding-options">
+                    <button className="new-workspace-button" onClick={handleCreateProject} disabled={isPending}>
+                        <FaPlus className="button-icon" /> {isPending ? 'Creating...' : 'New Workspace'}
+                    </button>
+                    <button className="import-repo-button">
+                        <FaGitAlt className="button-icon" /> Import Repo
+                    </button>
+                </div>
+            </div>
+
+            <div className="workspaces-section">
+                <div className="workspaces-tabs">
+                    <button
+                        className={`workspace-tab ${activeTab === 'myWorkspaces' ? 'active' : ''}`}
+                        onClick={() => setActiveTab('myWorkspaces')}
+                    >
+                        My workspaces
+                    </button>
+                    <button
+                        className={`workspace-tab ${activeTab === 'sharedWithMe' ? 'active' : ''}`}
+                        onClick={() => setActiveTab('sharedWithMe')}
+                    >
+                        Shared with me
+                    </button>
+                </div>
+                <div className="project-list">
+                    {/* Placeholder for project cards */}
+                </div>
+            </div>
+            </div>
+        </div>
     )
-}
+} 
