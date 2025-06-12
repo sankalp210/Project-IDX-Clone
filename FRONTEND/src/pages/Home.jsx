@@ -17,7 +17,7 @@ const Home = () => {
     return (
         <div className="home-container">
             <nav className="navbar">
-                <div className="navbar-brand">CodeCanvas</div>
+                <div className="navbar-brand">Code .</div>
                 <div className="navbar-links">
                     <button className="nav-button">Sign In</button>
                     <button className="nav-button">Sign Up</button>

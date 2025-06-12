@@ -1,8 +1,38 @@
+.editor-tab {
+    display: flex;
+    align-items: center;
+    margin-right: 5px;
+    position: relative;
+}
+
 .editor-button {
-    min-width:120px;
-    outline:none;
-    color:#fff;
-    font-family:jetbrains-mono;
-    border-top: 3px solid magenta;
-    height: 27px;  
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 3px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.editor-button:hover {
+    background-color: #4a4859;
+}
+
+.close-button {
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: #ff5555;
+    padding: 0;
+    margin-left: 5px;
+}
+
+.editor-tab.active .editor-button {
+    border-top: 2px solid #f7b9dd;
+}
+
+.editor-tab.error .editor-button {
+    color: #ff5555;
 }

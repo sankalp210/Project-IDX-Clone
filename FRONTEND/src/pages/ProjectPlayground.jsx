@@ -4,6 +4,7 @@ import { TreeStructure } from "../components/organisms/TreeStructure/TreeStructu
 import { useEffect, useState } from "react";
 import { useTreeStructureStore } from "../store/treeStructureStore";
 import { useEditorSocketStore } from "../store/editorSocketStore";
+import { TabContainer } from "../components/molecules/TabContainer/TabsContainer";
 import { io } from "socket.io-client";
 import { BrowserTerminal } from "../components/molecules/BrowserTerminal/BrowserTerminal";
 import { useTerminalSocketStore } from "../store/terminalSocketStore";
@@ -79,7 +80,7 @@ export const ProjectPlayground = () => {
 
                         }}
                     >
-
+                    <TabContainer />
                     <Allotment
                         vertical={true}
                     >
