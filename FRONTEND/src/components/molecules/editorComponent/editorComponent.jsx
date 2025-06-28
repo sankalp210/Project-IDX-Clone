@@ -126,6 +126,7 @@ export const EditorComponent = () => {
         <>
             {editorState.theme && activeFileTab ? (
                 <Editor
+                    key={activeFileTab?.path}
                     height="100vh"
                     language={extensionToFileType(activeFileTab?.extension)}
                     value={fileContent || '// Welcome to the playground'}
@@ -154,7 +155,7 @@ export const EditorComponent = () => {
   textAlign: 'center'
 }}>
   <img
-    src="public/folder-open.png"
+    src="/folder-open.png"
     alt="No File Selected"
     style={{ width: 150, opacity: 0.5 }}
   />
