@@ -3,8 +3,13 @@ import { getContainerPort } from "../containers/handleContainerCreate.js";
 
 export const handleEditorSocketEvents = (socket, editorNamespace) => {
     socket.on("writeFile", async ({ data, pathToFileOrFolder }) => {
+        
         try {
             const response = await fs.writeFile(pathToFileOrFolder, data);
+            await fs.utimes(pathToFileOrFolder, new Date(), new Date()); // force update mtime
+            console.log("Writing file to:", pathToFileOrFolder);
+            console.log("With data:", data.slice(0, 100)); // just first 100 chars
+
             editorNamespace.emit("writeFileSuccess", {
                 data: "File written successfully",
                 path: pathToFileOrFolder,

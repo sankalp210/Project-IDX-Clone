@@ -1,106 +1,86 @@
 import Docker from 'dockerode';
-// import path from 'path';
 const docker = new Docker();
 
 export const listContainer = async () => {
-
     const containers = await docker.listContainers();
     console.log("Containers", containers);
-    // PRINT PORTS ARRAY FROM ALL CONTAINER
     containers.forEach((containerInfo) => {
         console.log(containerInfo.Ports);
-    })
-}
+    });
+};
 
-export const handleContainerCreate = async (projectId, terminalSocket, req, tcpSocket, head) => {
+export const handleContainerCreate = async (projectId) => {
     console.log("Project id received for container create", projectId);
+
     try {
+        // Try to find container by name
+        const containers = await docker.listContainers({ all: true });
+        const matching = containers.find(c => c.Names.includes(`/${projectId}`));
 
-        // Delete any existing container running with same name
-        const existingContainer = await docker.listContainers({
-            name: projectId
-        });
-
-
-        console.log("Existing container", existingContainer);
-
-        if(existingContainer.length > 0) {
-            console.log("Container already exists, stopping and removing it");
-            const container = docker.getContainer(existingContainer[0].Id);
-            await container.remove({force: true});
+        if (matching) {
+            console.log("Container already exists, trying to remove...");
+            const container = docker.getContainer(matching.Id);
+            try {
+                await container.remove({ force: true });
+                console.log("Old container removed");
+            } catch (err) {
+                if (err.statusCode === 409) {
+                    console.log("Container removal in progress. Retrying in 2s...");
+                    await new Promise(res => setTimeout(res, 2000));
+                    return await handleContainerCreate(projectId); // retry once
+                }
+                console.error("Error during container removal", err);
+                return null;
+            }
         }
 
-        console.log("Creating a new container");
-
         const container = await docker.createContainer({
-            Image: 'sandbox', // name given by us for the written dockerfile
+            Image: 'sandbox',
             AttachStdin: true,
             AttachStdout: true,
             AttachStderr: true,
             Cmd: ['/bin/bash'],
             name: projectId,
             Tty: true,
-            User: "sandbox",
+            User: 'sandbox',
             Volumes: {
                 "/home/sandbox/app": {}
             },
             ExposedPorts: {
-                    "5173/tcp": {}
+                "5173/tcp": {}
             },
             Env: ["HOST=0.0.0.0"],
             HostConfig: {
-                Binds: [ // mounting the project directory to the container
-                    `${process.cwd()}/projects/${projectId}:/home/sandbox/app`
+                Binds: [
+                    `${process.cwd()}/Projects/${projectId}:/home/sandbox/app`
                 ],
                 PortBindings: {
-                    "5173/tcp": [
-                        {
-                            "HostPort": "0" // random port will be assigned by docker
-                        }
-                    ]
-                },
-                
+                    "5173/tcp": [{ HostPort: "0" }]
+                }
             }
         });
-    
-        console.log("Container created", container.id);
 
+        console.log("Container created:", container.id);
         await container.start();
-
-        console.log("container started");
-
-        // Below is the place where we upgrade the connection to websocket
-        // terminalSocket.handleUpgrade(req, tcpSocket, head, (establishedWSConn) => {
-        //     console.log("Connection upgraded to websocket");
-        //     terminalSocket.emit("connection", establishedWSConn, req, container);
-        // });
+        console.log("Container started");
 
         return container;
 
-
-
-    } catch(error) {
-        console.log("Error while creating container", error);
+    } catch (error) {
+        console.error("Error while creating container", error);
+        return null;
     }
-
-
-}
-
+};
 
 export async function getContainerPort(containerName) {
-    const container = await docker.listContainers({
-        name: containerName
-    });
-
-    if(container.length > 0) {
-        const containerInfo = await docker.getContainer(container[0].Id).inspect();
-        console.log("Container info", containerInfo);
+    const container = await docker.listContainers({ name: containerName });
+    if (container.length > 0) {
         try {
-            return containerInfo?.NetworkSettings?.Ports["5173/tcp"][0].HostPort;
-        } catch(error) {
-            console.log("port not present");
+            const info = await docker.getContainer(container[0].Id).inspect();
+            return info?.NetworkSettings?.Ports["5173/tcp"]?.[0]?.HostPort;
+        } catch (e) {
+            console.log("Could not inspect container:", e);
             return undefined;
         }
-        
     }
 }
