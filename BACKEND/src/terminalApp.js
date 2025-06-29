@@ -9,7 +9,9 @@ const app = express();
 const server = createServer(app);
 
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({
+    extended:true
+}));
 app.use(cors());
 
 server.listen(4000, () => {
