@@ -52,6 +52,8 @@ export const useActiveFileTabStore = create((set) => {
                 tabs: [],
                 activeFileTab: null
             });
-        }
+        },
+        resetTabs: () => set({ tabs: [], activeFileTab: null })
+        
     };
 });

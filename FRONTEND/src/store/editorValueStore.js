@@ -5,6 +5,8 @@ export const useEditorValueStore = create((set) => {
     value : null,
     setValue : (value) => {
       set({value})
-    }
+    },
+    resetEditorValue: () => set({ value: "" })
+
   }
 })

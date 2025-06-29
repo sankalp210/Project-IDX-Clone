@@ -1,14 +1,12 @@
-export const useProjectTree = (projectId) => {
-    const { isLoading, isError, data, error } = useQuery({
-        queryFn: () => getProjectTree({ projectId }),
-        queryKey: ["projectTree", projectId],
-        staleTime: 10000,
-    });
+import { getProjectTree } from "../../../apis/projects";
 
-    return {
-        isLoading,
-        isError,
-        data,
-        error
-    };
-}
+export const useProjectTree = (projectId) => {
+  const { isLoading, isError, data, error } = useQuery({
+    queryFn: () => getProjectTree({ projectId }),  // ✅ No need to pass userId
+    queryKey: ["projectTree", projectId],
+    staleTime: 10000,
+    enabled: !!projectId,
+  });
+
+  return { isLoading, isError, data, error };
+};

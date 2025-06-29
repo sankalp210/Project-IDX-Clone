@@ -12,19 +12,27 @@ import { Browser } from "../components/organisms/Browser/Browser";
 import { Button } from "antd";
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
+import { useActiveFileTabStore } from "../store/activeFileTabStore";
+import { useEditorValueStore } from "../store/editorValueStore";
+
 export const ProjectPlayground = () => {
 
     const {projectId: projectIdFromUrl } = useParams();
 
-    const { setProjectId, projectId } = useTreeStructureStore();
+    const { setProjectId, projectId, resetTreeStructure } = useTreeStructureStore();
 
     const { setEditorSocket } = useEditorSocketStore();
     const { terminalSocket, setTerminalSocket } = useTerminalSocketStore();
 
     const [loadBrowser, setLoadBrowser] = useState(false);
+    const { resetTabs } = useActiveFileTabStore();              // ✅ new
+    const { resetEditorValue } = useEditorValueStore(); 
 
     useEffect(() => {
         if(projectIdFromUrl) {
+            resetTreeStructure();
+            resetTabs();
+            resetEditorValue();
             setProjectId(projectIdFromUrl);
         
             const editorSocketConn = io(`${import.meta.env.VITE_BACKEND_URL}/editor`, {
@@ -32,6 +40,7 @@ export const ProjectPlayground = () => {
                     projectId: projectIdFromUrl
                 }
             });
+            
 
             try {
                 const ws = new WebSocket("ws://localhost:4000/terminal?projectId="+projectIdFromUrl);
