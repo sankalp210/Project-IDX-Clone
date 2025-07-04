@@ -35,7 +35,7 @@ export const handleContainerCreate = async (projectId) => {
         }
 
         const container = await docker.createContainer({
-            Image: 'sandbox',
+            Image: 'sankalp210/terminal-image',
             AttachStdin: true,
             AttachStdout: true,
             AttachStderr: true,

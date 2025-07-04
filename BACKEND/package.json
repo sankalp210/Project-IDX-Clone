@@ -3,18 +3,20 @@
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
+  "description": "",
   "scripts": {
-    "dev": "npx nodemon src/index.js --ignore Projects"
+    "dev": "npx nodemon src/index.js --ignore Projects",
+    "start": "concurrently \"node src/index.js\" \"node src/terminalApp.js\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "@supabase/supabase-js": "^2.50.2",
     "adm-zip": "^0.5.16",
     "archiver": "^7.0.1",
     "chokidar": "^4.0.3",
+    "concurrently": "^9.2.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "directory-tree": "^3.5.2",
