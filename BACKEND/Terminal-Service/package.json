@@ -1,0 +1,24 @@
+{
+  "name": "terminal-service",
+  "version": "1.0.0",
+  "main": "src/terminalApp.js",
+  "type": "module",
+  "description": "Handles terminal container logic and terminal WebSocket",
+  "scripts": {
+    "dev": "nodemon src/terminalApp.js --ignore Projects",
+    "start": "node src/terminalApp.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.50.3",
+    "adm-zip": "^0.5.16",
+    "cors": "^2.8.5",
+    "dockerode": "^4.0.5",
+    "dotenv": "^17.0.1",
+    "express": "^4.21.2",
+    "fs-extra": "^11.3.0",
+    "ws": "^8.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
