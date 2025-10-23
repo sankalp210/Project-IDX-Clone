@@ -20,6 +20,6 @@ export const useTreeStructureStore = create((set, get) => {
         setProjectId: (projectId) => {
             set({ projectId });
         },
-        resetTreeStructure: () => set({ treeStructure: null }), // ✅ added
+        resetTreeStructure: () => set({ treeStructure: null }), 
     };
 });

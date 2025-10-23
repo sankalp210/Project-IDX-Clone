@@ -15,6 +15,7 @@ import "allotment/dist/style.css";
 import { useActiveFileTabStore } from "../store/activeFileTabStore";
 import { useEditorValueStore } from "../store/editorValueStore";
 
+
 export const ProjectPlayground = () => {
 
     const {projectId: projectIdFromUrl } = useParams();
@@ -25,7 +26,7 @@ export const ProjectPlayground = () => {
     const { terminalSocket, setTerminalSocket } = useTerminalSocketStore();
 
     const [loadBrowser, setLoadBrowser] = useState(false);
-    const { resetTabs } = useActiveFileTabStore();              // ✅ new
+    const { resetTabs } = useActiveFileTabStore();            
     const { resetEditorValue } = useEditorValueStore(); 
 
     useEffect(() => {
@@ -43,7 +44,8 @@ export const ProjectPlayground = () => {
             
 
             try {
-                const ws = new WebSocket("ws://localhost:4000/terminal?projectId="+projectIdFromUrl);
+                // const ws = new WebSocket("ws://localhost:4000/terminal?projectId="+projectIdFromUrl);
+                const ws = new WebSocket(`ws://${import.meta.env.VITE_BACKEND_IP}:4000/terminal?projectId=${projectIdFromUrl}`);
                 setTerminalSocket(ws);
                 
             } catch(error) {
