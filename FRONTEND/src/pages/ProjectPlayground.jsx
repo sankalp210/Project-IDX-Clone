@@ -45,7 +45,8 @@ export const ProjectPlayground = () => {
 
             try {
                 // const ws = new WebSocket("ws://localhost:4000/terminal?projectId="+projectIdFromUrl);
-                const ws = new WebSocket(`ws://${import.meta.env.VITE_BACKEND_IP}:4000/terminal?projectId=${projectIdFromUrl}`);
+                // const ws = new WebSocket(`ws://${import.meta.env.VITE_BACKEND_IP}:4000/terminal?projectId=${projectIdFromUrl}`);
+                const ws = new WebSocket(`wss://${import.meta.env.VITE_BACKEND_IP}/terminal?projectId=${projectIdFromUrl}`);
                 setTerminalSocket(ws);
                 
             } catch(error) {
